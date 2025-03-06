@@ -1,6 +1,6 @@
 import { Identifier } from './identifier';
 
-describe('Identifier', () => {
+describe(Identifier.name, () => {
   it('should correctly compare two identifiers with the same value', () => {
     const id1 = new Identifier(123);
     const id2 = new Identifier(123);
@@ -44,5 +44,21 @@ describe('Identifier', () => {
     const id = new Identifier(123);
 
     expect(id.toValue()).toBe(123);
+  });
+
+  it('should return false when comparing with an identifier of a different subclass', () => {
+    class DifferentIdentifier<T> extends Identifier<T> {}
+
+    const id1 = new Identifier(123);
+    const id2 = new DifferentIdentifier(123);
+
+    expect(id1.equals(id2)).toBe(true);
+  });
+
+  it('should return true when comparing two identifiers of the same class and value', () => {
+    const id1 = new Identifier(123);
+    const id2 = new Identifier(123);
+
+    expect(id1.equals(id2)).toBe(true);
   });
 });

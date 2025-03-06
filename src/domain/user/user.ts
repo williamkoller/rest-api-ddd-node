@@ -34,6 +34,18 @@ export class User extends AggregateRoot<UserProps> {
     return this.props.email;
   }
 
+  get passwordHash(): string {
+    return this.props.passwordHash;
+  }
+
+  get salt(): string {
+    return this.props.salt;
+  }
+
+  get twoFactorEnabled(): boolean {
+    return this.props.twoFactorEnabled;
+  }
+
   get status(): 'active' | 'inactive' | 'banned' | 'pending' {
     return this.props.status;
   }

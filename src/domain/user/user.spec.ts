@@ -9,6 +9,7 @@ describe(User.name, () => {
       username: 'testuser',
       email: 'test@example.com',
       passwordHash: 'hashed_password',
+      twoFactorEnabled: false,
       salt: 'random_salt',
       status: 'active',
     });
@@ -17,6 +18,9 @@ describe(User.name, () => {
     expect(user.id).toBeDefined();
     expect(user.username).toBe('testuser');
     expect(user.email).toBe('test@example.com');
+    expect(user.passwordHash).toBe('hashed_password');
+    expect(user.salt).toBe('random_salt');
+    expect(user.twoFactorEnabled).toBe(false);
     expect(user.status).toBe('active');
     expect(user.createdAt).toBeInstanceOf(Date);
     expect(user.updatedAt).toBeInstanceOf(Date);

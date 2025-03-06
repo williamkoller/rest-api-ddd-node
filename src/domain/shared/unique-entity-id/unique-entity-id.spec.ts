@@ -1,11 +1,12 @@
 import { UniqueEntityId } from './unique-entity-id';
+import { Identifier } from '../identifier/identifier';
 import { randomUUID } from 'node:crypto';
 
 jest.mock('node:crypto', () => ({
   randomUUID: jest.fn(),
 }));
 
-describe('UniqueEntityId', () => {
+describe(UniqueEntityId.name, () => {
   it('should generate a random UUID if no ID is provided', () => {
     const mockUUID = '123e4567-e89b-12d3-a456-426614174000';
     (randomUUID as jest.Mock).mockReturnValue(mockUUID);
@@ -21,6 +22,18 @@ describe('UniqueEntityId', () => {
     const entityId = new UniqueEntityId(providedId);
 
     expect(entityId.toValue()).toBe(providedId);
+  });
+
+  it('should call super with the correct ID', () => {
+    const mockUUID = '123e4567-e89b-12d3-a456-426614174000';
+    (randomUUID as jest.Mock).mockReturnValue(mockUUID);
+
+    const entityIdWithGeneratedId = new UniqueEntityId();
+    expect(entityIdWithGeneratedId.toValue()).toBe(mockUUID);
+
+    const providedId = '456';
+    const entityIdWithProvidedId = new UniqueEntityId(providedId);
+    expect(entityIdWithProvidedId.toValue()).toBe(providedId);
   });
 
   it('should be an instance of Identifier', () => {
