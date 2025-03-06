@@ -21,8 +21,8 @@ export class Swagger {
       }),
     );
     const document = new DocumentBuilder()
-      .setTitle('Pantone Challenge API')
-      .setDescription('Pantone Challenge API description')
+      .setTitle('Rest API DDD Node')
+      .setDescription('Rest API DDD Node description')
       .setVersion('0.0.1')
       .build();
 
