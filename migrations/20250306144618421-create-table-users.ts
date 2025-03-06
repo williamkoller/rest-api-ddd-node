@@ -55,10 +55,10 @@ export const up: Migration = async ({ context: queryInterface }) => {
     deleted_at: {
       type: DataTypes.DATE,
       allowNull: true,
-    }
+    },
   });
 
-  await queryInterface.addIndex(tableName, ['feld_name'], { unique: true });
+  await queryInterface.addIndex(tableName, ['email'], { unique: true });
 };
 
 export const down: Migration = async ({ context: queryInterface }) => {
