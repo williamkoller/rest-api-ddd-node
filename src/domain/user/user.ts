@@ -1,4 +1,5 @@
 import { Guard, IGuardArgument } from '../../shared/guards/guard';
+import { CommonValidation } from '../../shared/validation/common-validation';
 import { UserStatusEnum } from '../enums/user-status-enum';
 import { AggregateRoot } from '../shared/aggregate-root/aggregate-root';
 import { DomainValidationException } from '../shared/errors/domain-validation-exception';
@@ -78,6 +79,9 @@ export class User extends AggregateRoot<UserProps> {
 
     if (guardResult.isFailure)
       throw new DomainValidationException(guardResult.getErrorValue());
+
+    if (CommonValidation.validateEmailAddress(props.email))
+      throw new DomainValidationException('Email is invalid');
 
     const user = new User(
       {

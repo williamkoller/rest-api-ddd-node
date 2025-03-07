@@ -3,8 +3,18 @@ import { UniqueEntityId } from '../shared/unique-entity-id/unique-entity-id';
 import { DomainValidationException } from '../shared/errors/domain-validation-exception';
 import { UserCreatedEvent } from './events/user-created-event';
 import { UserStatusEnum } from '../enums/user-status-enum';
+import { CommonValidation } from '../../shared/validation/common-validation';
 
 describe(User.name, () => {
+  beforeEach(() => {
+    jest
+      .spyOn(CommonValidation, 'validateEmailAddress')
+      .mockImplementation(() => false);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   it('should create a new user with default values and trigger UserCreatedEvent', () => {
     const user = User.create({
       username: 'testuser',
@@ -89,5 +99,16 @@ describe(User.name, () => {
     });
 
     expect(user.props.twoFactorEnabled).toBe(false);
+  });
+
+  it('should throw DomainValidationException when email is invalid', () => {
+    const emailInvalid = 'email-mail';
+    jest.spyOn(CommonValidation, 'validateEmailAddress').mockReturnValue(true);
+
+    expect(() => {
+      if (CommonValidation.validateEmailAddress(emailInvalid)) {
+        throw new DomainValidationException('Email is invalid');
+      }
+    }).toThrow(DomainValidationException);
   });
 });

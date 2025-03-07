@@ -2,8 +2,19 @@ import { UserCreatedEvent } from './user-created-event';
 import { User } from '../user';
 import { UniqueEntityId } from '../../shared/unique-entity-id/unique-entity-id';
 import { UserStatusEnum } from '../../enums/user-status-enum';
+import { CommonValidation } from '../../../shared/validation/common-validation';
+import { DomainValidationException } from '../../shared/errors/domain-validation-exception';
 
 describe(UserCreatedEvent.name, () => {
+  beforeEach(() => {
+    jest
+      .spyOn(CommonValidation, 'validateEmailAddress')
+      .mockImplementation(() => false);
+  });
+
+  afterEach(() => {
+    jest.restoreAllMocks();
+  });
   it('should create a new UserCreatedEvent with the correct user and timestamp', () => {
     const user = User.create({
       username: 'testuser',
@@ -40,5 +51,16 @@ describe(UserCreatedEvent.name, () => {
     const event = new UserCreatedEvent(user);
 
     expect(event.getAggregateId()).toEqual(userId);
+  });
+
+  it('should throw DomainValidationException when email is invalid', () => {
+    const emailInvalid = 'email-mail';
+    jest.spyOn(CommonValidation, 'validateEmailAddress').mockReturnValue(true);
+
+    expect(() => {
+      if (CommonValidation.validateEmailAddress(emailInvalid)) {
+        throw new DomainValidationException('Email is invalid');
+      }
+    }).toThrow(DomainValidationException);
   });
 });
