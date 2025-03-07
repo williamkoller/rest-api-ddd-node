@@ -1,6 +1,6 @@
 import { Sequelize } from 'sequelize';
 import { Umzug, SequelizeStorage } from 'umzug';
-import configuration from '../src/config/configuration';
+import configuration from '../src/shared/config/configuration';
 import * as dotenv from 'dotenv';
 require('ts-node/register');
 

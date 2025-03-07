@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import { ConfigurationImplementation } from '@app/config/configuration';
+import { ConfigurationImplementation } from '@app/shared/config/configuration';
 import { ConfigService } from '@nestjs/config';
 import { Logger, ValidationPipe } from '@nestjs/common';
 import { Swagger } from './shared/docs/swagger';
@@ -10,6 +10,7 @@ import { Response } from 'express';
 import { initSequelizeCLS } from 'sequelize-transactional-decorator';
 import { umzug } from '../migrations/umzugClient';
 import { EventsDispatcherInterceptor } from './shared/http/interceptors/events-dispatcher.interceptor';
+import helmet from 'helmet';
 
 async function bootstrap() {
   initSequelizeCLS();
@@ -35,6 +36,8 @@ async function bootstrap() {
   app.getHttpAdapter().get('/', (_, res: Response) => {
     res.redirect('/api/health-check');
   });
+
+  app.use(helmet());
 
   const config = new ConfigurationImplementation(new ConfigService());
   const port = config.port;
