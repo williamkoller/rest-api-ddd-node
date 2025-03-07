@@ -5,7 +5,7 @@ module.exports = {
     '!<rootDir>/src/main.ts',
     '!<rootDir>/src/app.module.ts',
     '!<rootDir>/src/**/*module.ts',
-    '!<rootDir>/src/shared/config/**',
+    '!<rootDir>/src/config/**',
     '!<rootDir>/src/shared/decorators/**',
     '!<rootDir>/src/shared/docs/**',
     '!<rootDir>/src/shared/http/**',

@@ -1,6 +1,7 @@
 import { UserCreatedEvent } from './user-created-event';
 import { User } from '../user';
 import { UniqueEntityId } from '../../shared/unique-entity-id/unique-entity-id';
+import { UserStatusEnum } from '../../enums/user-status-enum';
 
 describe(UserCreatedEvent.name, () => {
   it('should create a new UserCreatedEvent with the correct user and timestamp', () => {
@@ -9,7 +10,7 @@ describe(UserCreatedEvent.name, () => {
       email: 'test@example.com',
       passwordHash: 'hashed_password',
       salt: 'random_salt',
-      status: 'active',
+      status: UserStatusEnum.ACTIVE,
     });
 
     const event = new UserCreatedEvent(user);
@@ -31,7 +32,7 @@ describe(UserCreatedEvent.name, () => {
         email: 'test2@example.com',
         passwordHash: 'hashed_password',
         salt: 'random_salt',
-        status: 'active',
+        status: UserStatusEnum.ACTIVE,
       },
       userId,
     );

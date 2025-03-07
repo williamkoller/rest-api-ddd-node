@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
-import configuration from '@app/shared/config/configuration';
+import configuration from '@app/config/configuration';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { SequelizeTransactionalModule } from 'sequelize-transactional-decorator';
 import { MetadataScanner } from '@nestjs/core';

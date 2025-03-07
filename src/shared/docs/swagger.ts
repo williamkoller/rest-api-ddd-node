@@ -1,7 +1,7 @@
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import basicAuth from 'express-basic-auth';
-import { ConfigurationImplementation } from '../config/configuration';
+import { ConfigurationImplementation } from '../../config/configuration';
 
 const swaggerPath = '/api/swagger';
 

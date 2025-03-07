@@ -1,4 +1,5 @@
 import { Guard, IGuardArgument } from '../../shared/guards/guard';
+import { UserStatusEnum } from '../enums/user-status-enum';
 import { AggregateRoot } from '../shared/aggregate-root/aggregate-root';
 import { DomainValidationException } from '../shared/errors/domain-validation-exception';
 import { UniqueEntityId } from '../shared/unique-entity-id/unique-entity-id';
@@ -11,7 +12,7 @@ export type UserProps = {
   salt: string;
   twoFactorEnabled?: boolean;
   twoFactorSecret?: string;
-  status: 'active' | 'inactive' | 'banned' | 'pending';
+  status: UserStatusEnum;
   createdAt?: Date | null;
   updatedAt?: Date | null;
   deletedAt?: Date | null;
@@ -46,7 +47,7 @@ export class User extends AggregateRoot<UserProps> {
     return this.props.twoFactorEnabled;
   }
 
-  get status(): 'active' | 'inactive' | 'banned' | 'pending' {
+  get status(): UserStatusEnum {
     return this.props.status;
   }
 
@@ -91,9 +92,7 @@ export class User extends AggregateRoot<UserProps> {
     return user;
   }
 
-  public updateStatus(
-    newStatus: 'active' | 'inactive' | 'banned' | 'pending',
-  ): void {
+  public updateStatus(newStatus: UserStatusEnum): void {
     this.props.status = newStatus;
     this.props.updatedAt = new Date();
   }

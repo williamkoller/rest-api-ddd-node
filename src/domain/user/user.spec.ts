@@ -2,6 +2,7 @@ import { User } from './user';
 import { UniqueEntityId } from '../shared/unique-entity-id/unique-entity-id';
 import { DomainValidationException } from '../shared/errors/domain-validation-exception';
 import { UserCreatedEvent } from './events/user-created-event';
+import { UserStatusEnum } from '../enums/user-status-enum';
 
 describe(User.name, () => {
   it('should create a new user with default values and trigger UserCreatedEvent', () => {
@@ -11,7 +12,7 @@ describe(User.name, () => {
       passwordHash: 'hashed_password',
       twoFactorEnabled: false,
       salt: 'random_salt',
-      status: 'active',
+      status: UserStatusEnum.ACTIVE,
     });
 
     expect(user).toBeInstanceOf(User);
@@ -21,7 +22,7 @@ describe(User.name, () => {
     expect(user.passwordHash).toBe('hashed_password');
     expect(user.salt).toBe('random_salt');
     expect(user.twoFactorEnabled).toBe(false);
-    expect(user.status).toBe('active');
+    expect(user.status).toBe(UserStatusEnum.ACTIVE);
     expect(user.createdAt).toBeInstanceOf(Date);
     expect(user.updatedAt).toBeInstanceOf(Date);
 
@@ -38,7 +39,7 @@ describe(User.name, () => {
         email: 'custom@example.com',
         passwordHash: 'custom_hashed',
         salt: 'custom_salt',
-        status: 'active',
+        status: UserStatusEnum.ACTIVE,
       },
       customId,
     );
@@ -55,7 +56,7 @@ describe(User.name, () => {
         email: '',
         passwordHash: '',
         salt: '',
-        status: 'active',
+        status: UserStatusEnum.ACTIVE,
       }),
     ).toThrow(DomainValidationException);
   });
@@ -66,14 +67,14 @@ describe(User.name, () => {
       email: 'status@example.com',
       passwordHash: 'status_hashed',
       salt: 'status_salt',
-      status: 'pending',
+      status: UserStatusEnum.PENDING,
     });
 
-    expect(user.status).toBe('pending');
+    expect(user.status).toBe(UserStatusEnum.PENDING);
 
-    user.updateStatus('active');
+    user.updateStatus(UserStatusEnum.ACTIVE);
 
-    expect(user.status).toBe('active');
+    expect(user.status).toBe(UserStatusEnum.ACTIVE);
     expect(user.updatedAt).toBeInstanceOf(Date);
   });
 
@@ -83,7 +84,7 @@ describe(User.name, () => {
       email: 'security@example.com',
       passwordHash: 'security_hashed',
       salt: 'security_salt',
-      status: 'active',
+      status: UserStatusEnum.ACTIVE,
     });
 
     expect(user.props.twoFactorEnabled).toBe(false);
