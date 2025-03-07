@@ -8,6 +8,7 @@ import {
   Table,
   Unique,
 } from 'sequelize-typescript';
+import { UserStatusEnum } from '../../../../domain/enums/user-status-enum';
 
 export type UserAttributes = {
   id: string;
@@ -17,18 +18,11 @@ export type UserAttributes = {
   salt: string;
   twoFactorEnabled?: boolean | null;
   twoFactorSecret?: string | null;
-  status: UserStatus;
+  status: UserStatusEnum;
   createdAt?: Date | null;
   updatedAt?: Date | null;
   deletedAt?: Date | null;
 };
-
-export enum UserStatus {
-  ACTIVE = 'active',
-  INACTIVE = 'inactive',
-  BANNED = 'banned',
-  PENDING = 'pending',
-}
 
 interface UserCreationAttributes extends Optional<UserAttributes, 'id'> {}
 
@@ -66,13 +60,13 @@ export class UserModel extends Model<UserAttributes, UserCreationAttributes> {
   @AllowNull(false)
   @Column(
     DataType.ENUM(
-      UserStatus.ACTIVE,
-      UserStatus.INACTIVE,
-      UserStatus.BANNED,
-      UserStatus.PENDING,
+      UserStatusEnum.ACTIVE,
+      UserStatusEnum.INACTIVE,
+      UserStatusEnum.BANNED,
+      UserStatusEnum.PENDING,
     ),
   )
-  declare status: UserStatus;
+  declare status: UserStatusEnum;
 
   @Column(DataType.DATE)
   declare createdAt: Date;

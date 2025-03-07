@@ -47,6 +47,10 @@ export class User extends AggregateRoot<UserProps> {
     return this.props.twoFactorEnabled;
   }
 
+  get twoFactorSecret(): string {
+    return this.props.twoFactorSecret;
+  }
+
   get status(): UserStatusEnum {
     return this.props.status;
   }
