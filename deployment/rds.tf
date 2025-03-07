@@ -5,7 +5,7 @@ resource "aws_db_instance" "postgres" {
   engine_version      = "14.4"
   instance_class      = var.db_instance_type
   username           = "admin"
-  password           = "SuperSecurePassword123"
+  password           = "Q1w2e3r4t5y6u7i8o9p0"
   publicly_accessible = false
   skip_final_snapshot = true
 }
