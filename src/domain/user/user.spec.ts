@@ -83,6 +83,7 @@ describe(User.name, () => {
       username: 'securityUser',
       email: 'security@example.com',
       passwordHash: 'security_hashed',
+      twoFactorEnabled: false,
       salt: 'security_salt',
       status: UserStatusEnum.ACTIVE,
     });
